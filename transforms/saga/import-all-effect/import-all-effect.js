@@ -3,14 +3,23 @@ module.exports = (file, api) => {
   const importSpecifierToInsert = j.importSpecifier(j.identifier('all'));
   const effectsFileName = 'redux-saga/effects';
 
-  const findResult = j(file.source)
+  let findResult = j(file.source)
     .find(j.ImportSpecifier)
     .filter(
       p =>
         p.parentPath.node.type === 'ImportDeclaration' &&
         p.parentPath.node.source.value === effectsFileName
+    );
+
+  const isAlreadyImported = findResult.some(p =>
+    p.parentPath.node.specifiers.some(
+      specifier => specifier.imported.name === 'all'
     )
-    .at(0);
+  );
+
+  if (isAlreadyImported) return file.source;
+
+  findResult = findResult.at(0);
 
   // If there is no existing saga effects import
   if (findResult.size() === 0) {
