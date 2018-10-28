@@ -1,0 +1,15 @@
+{
+  "name": "codemods-collection",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3"
+  },
+  "dependencies": {
+    "jscodeshift": "^0.5.1"
+  }
+}
